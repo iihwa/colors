@@ -1,13 +1,17 @@
 # Color Palette Generator
 
-A simple web tool that generates a random set of color palettes. Click a color to copy its HEX code.
+A dark-themed, responsive color palette generator. Generates 5 random colors and displays HEX, RGB, and HSL values for each color.
 
 ## Features
 
-- Generate 5 random colors
-- Click a color to copy the HEX code
-- Lock/unlock individual colors
-- Generate new palette without changing locked colors
+- Randomly generates 5 color blocks
+- Shows:
+  - HEX (e.g., #3a8ee6)
+  - RGB (e.g., rgb(58, 142, 230))
+  - HSL (e.g., hsl(210, 75%, 56%))
+- Click any value to copy it
+- Fully responsive and styled with a modern dark theme
+- No dependencies or build tools — just open in a browser
 
 ## Demo
 
