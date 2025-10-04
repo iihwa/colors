@@ -2,10 +2,14 @@ function getRandomColor() {
   const r = Math.floor(Math.random() * 256)
   const g = Math.floor(Math.random() * 256)
   const b = Math.floor(Math.random() * 256)
+
   const hex = "#" + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('')
   const rgb = `rgb(${r}, ${g}, ${b})`
   const hsl = rgbToHSL(r, g, b)
-  return { hex, rgb, hsl }
+  const luminance = getLuminance(r, g, b)
+  const brightness = luminance < 0.5 ? 'Dark' : 'Light'
+
+  return { hex, rgb, hsl, brightness }
 }
 
 function rgbToHSL(r, g, b) {
@@ -35,38 +39,62 @@ function rgbToHSL(r, g, b) {
   return `hsl(${h}, ${s}%, ${l}%)`
 }
 
+function getLuminance(r, g, b) {
+  const a = [r, g, b].map(v => {
+    v /= 255
+    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)
+  })
+  return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2]
+}
+
+function copyText(text) {
+  navigator.clipboard.writeText(text)
+  alert(`Copied: ${text}`)
+}
+
 function generatePalette() {
   const palette = document.getElementById("palette")
   palette.innerHTML = ""
 
   for (let i = 0; i < 5; i++) {
     const color = getRandomColor()
-    const colorDiv = document.createElement("div")
-    colorDiv.className = "color"
-    colorDiv.style.backgroundColor = color.hex
 
-    const hexSpan = document.createElement("span")
-    hexSpan.textContent = color.hex
-    hexSpan.onclick = () => copyText(color.hex)
+    const row = document.createElement("div")
+    row.className = "color-row"
 
-    const rgbSpan = document.createElement("span")
-    rgbSpan.textContent = color.rgb
-    rgbSpan.onclick = () => copyText(color.rgb)
+    const swatch = document.createElement("div")
+    swatch.className = "color-swatch"
+    swatch.style.backgroundColor = color.hex
 
-    const hslSpan = document.createElement("span")
-    hslSpan.textContent = color.hsl
-    hslSpan.onclick = () => copyText(color.hsl)
+    const info = document.createElement("div")
+    info.className = "color-info"
 
-    colorDiv.appendChild(hexSpan)
-    colorDiv.appendChild(rgbSpan)
-    colorDiv.appendChild(hslSpan)
-    palette.appendChild(colorDiv)
+    const hex = document.createElement("span")
+    hex.textContent = color.hex
+    hex.onclick = () => copyText(color.hex)
+
+    const rgb = document.createElement("span")
+    rgb.textContent = color.rgb
+    rgb.onclick = () => copyText(color.rgb)
+
+    const hsl = document.createElement("span")
+    hsl.textContent = color.hsl
+    hsl.onclick = () => copyText(color.hsl)
+
+    const bright = document.createElement("span")
+    bright.textContent = `Brightness: ${color.brightness}`
+    bright.onclick = () => copyText(color.brightness)
+
+    info.appendChild(hex)
+    info.appendChild(rgb)
+    info.appendChild(hsl)
+    info.appendChild(bright)
+
+    row.appendChild(swatch)
+    row.appendChild(info)
+
+    palette.appendChild(row)
   }
-}
-
-function copyText(text) {
-  navigator.clipboard.writeText(text)
-  alert(`Copied: ${text}`)
 }
 
 generatePalette()
