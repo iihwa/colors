@@ -1,0 +1,2 @@
+# colors
+🎨 Color Palette Generator
