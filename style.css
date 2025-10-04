@@ -1,12 +1,16 @@
 body {
-  font-family: sans-serif;
+  font-family: system-ui, sans-serif;
   text-align: center;
-  background: #f4f4f4;
+  background: #121212;
+  color: #f0f0f0;
+  margin: 0;
   padding: 2rem;
 }
 
 h1 {
   margin-bottom: 2rem;
+  font-size: 1.8rem;
+  color: #ffffff;
 }
 
 #palette {
@@ -18,24 +22,26 @@ h1 {
 }
 
 .color {
-  width: 100px;
-  height: 150px;
-  border-radius: 10px;
+  width: 110px;
+  height: 160px;
+  border-radius: 12px;
   position: relative;
   cursor: pointer;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  font-weight: bold;
-  color: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: transform 0.2s ease;
-  padding-bottom: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding-bottom: 12px;
   user-select: none;
 }
 
 .color:hover {
   transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
 }
 
 .lock-icon {
@@ -43,23 +49,26 @@ h1 {
   top: 8px;
   right: 10px;
   font-size: 18px;
-  color: white;
-  background-color: rgba(0,0,0,0.4);
-  padding: 2px 6px;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.35);
+  padding: 4px 6px;
   border-radius: 4px;
-  cursor: pointer;
+  backdrop-filter: blur(2px);
 }
 
 button {
-  padding: 0.7rem 1.5rem;
+  padding: 0.8rem 1.6rem;
   font-size: 1rem;
   border: none;
-  border-radius: 5px;
-  background-color: #333;
-  color: white;
+  border-radius: 6px;
+  background-color: #1f1f1f;
+  color: #f0f0f0;
   cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 button:hover {
-  background-color: #555;
+  background-color: #2a2a2a;
+  transform: translateY(-1px);
 }
