@@ -1,3 +1,5 @@
+let lockedColors = [false, false, false, false, false];
+
 function getRandomColor() {
   const hex = Math.floor(Math.random() * 16777215).toString(16);
   return "#" + hex.padStart(6, "0");
@@ -11,17 +13,37 @@ function generatePalette() {
     const color = getRandomColor();
     const colorDiv = document.createElement("div");
     colorDiv.className = "color";
-    colorDiv.style.backgroundColor = color;
-    colorDiv.textContent = color;
 
-    colorDiv.onclick = () => {
-      navigator.clipboard.writeText(color);
-      alert(`Copied ${color} to clipboard!`);
+    // Keep locked colors
+    if (!lockedColors[i]) {
+      colorDiv.dataset.color = color;
+    }
+
+    const finalColor = colorDiv.dataset.color || color;
+    colorDiv.style.backgroundColor = finalColor;
+    colorDiv.textContent = finalColor;
+
+    // Lock icon
+    const lockIcon = document.createElement("div");
+    lockIcon.className = "lock-icon";
+    lockIcon.innerHTML = lockedColors[i] ? "🔒" : "🔓";
+
+    lockIcon.onclick = (e) => {
+      e.stopPropagation();
+      lockedColors[i] = !lockedColors[i];
+      generatePalette();
     };
 
+    // Copy on click
+    colorDiv.onclick = () => {
+      navigator.clipboard.writeText(finalColor);
+      alert(`Copied ${finalColor} to clipboard`);
+    };
+
+    colorDiv.appendChild(lockIcon);
     palette.appendChild(colorDiv);
   }
 }
 
-// Generate one on page load
+// Initial load
 generatePalette();
