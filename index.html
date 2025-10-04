@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🎨 Color Palette Generator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #f4f4f4;
+      padding: 2rem;
+    }
+
+    h1 {
+      margin-bottom: 2rem;
+    }
+
+    #palette {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .color {
+      width: 100px;
+      height: 150px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
+      padding-bottom: 10px;
+      user-select: none;
+    }
+
+    .color:hover {
+      transform: scale(1.05);
+    }
+
+    button {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎨 Color Palette Generator</h1>
+  <div id="palette"></div>
+  <button onclick="generatePalette()">Generate New Palette</button>
+
+  <script>
+    function getRandomColor() {
+      const hex = Math.floor(Math.random() * 16777215).toString(16);
+      return "#" + hex.padStart(6, "0");
+    }
+
+    function generatePalette() {
+      const palette = document.getElementById("palette");
+      palette.innerHTML = "";
+
+      for (let i = 0; i < 5; i++) {
+        const color = getRandomColor();
+        const colorDiv = document.createElement("div");
+        colorDiv.className = "color";
+        colorDiv.style.backgroundColor = color;
+        colorDiv.textContent = color;
+
+        colorDiv.onclick = () => {
+          navigator.clipboard.writeText(color);
+          alert(`Copied ${color} to clipboard!`);
+        };
+
+        palette.appendChild(colorDiv);
+      }
+    }
+
+    // Generate one on page load
+    generatePalette();
+  </script>
+</body>
+</html>
