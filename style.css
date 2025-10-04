@@ -5,17 +5,23 @@ body {
   padding: 2rem;
 }
 
+h1 {
+  margin-bottom: 2rem;
+}
+
 #palette {
   display: flex;
   justify-content: center;
-  margin: 2rem 0;
+  flex-wrap: wrap;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .color {
   width: 100px;
   height: 150px;
   border-radius: 10px;
+  position: relative;
   cursor: pointer;
   display: flex;
   align-items: flex-end;
@@ -24,8 +30,36 @@ body {
   color: white;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   transition: transform 0.2s ease;
+  padding-bottom: 10px;
+  user-select: none;
 }
 
 .color:hover {
   transform: scale(1.05);
+}
+
+.lock-icon {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 18px;
+  color: white;
+  background-color: rgba(0,0,0,0.4);
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button {
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555;
 }
