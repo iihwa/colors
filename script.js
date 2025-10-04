@@ -2,24 +2,17 @@ function getRandomColor() {
   const r = Math.floor(Math.random() * 256)
   const g = Math.floor(Math.random() * 256)
   const b = Math.floor(Math.random() * 256)
-
   const hex = "#" + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('')
   const rgb = `rgb(${r}, ${g}, ${b})`
   const hsl = rgbToHSL(r, g, b)
-  const luminance = getLuminance(r, g, b)
-  const brightness = luminance < 0.5 ? 'Dark' : 'Light'
-
+  const brightness = getLuminance(r, g, b) < 0.5 ? 'Dark' : 'Light'
   return { hex, rgb, hsl, brightness }
 }
 
 function rgbToHSL(r, g, b) {
-  r /= 255
-  g /= 255
-  b /= 255
-  const max = Math.max(r, g, b)
-  const min = Math.min(r, g, b)
+  r /= 255; g /= 255; b /= 255
+  const max = Math.max(r, g, b), min = Math.min(r, g, b)
   let h, s, l = (max + min) / 2
-
   if (max === min) {
     h = s = 0
   } else {
@@ -32,11 +25,7 @@ function rgbToHSL(r, g, b) {
     }
     h /= 6
   }
-
-  h = Math.round(h * 360)
-  s = Math.round(s * 100)
-  l = Math.round(l * 100)
-  return `hsl(${h}, ${s}%, ${l}%)`
+  return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`
 }
 
 function getLuminance(r, g, b) {
@@ -59,8 +48,8 @@ function generatePalette() {
   for (let i = 0; i < 5; i++) {
     const color = getRandomColor()
 
-    const row = document.createElement("div")
-    row.className = "color-row"
+    const card = document.createElement("div")
+    card.className = "color-card"
 
     const swatch = document.createElement("div")
     swatch.className = "color-swatch"
@@ -81,19 +70,19 @@ function generatePalette() {
     hsl.textContent = color.hsl
     hsl.onclick = () => copyText(color.hsl)
 
-    const bright = document.createElement("span")
-    bright.textContent = `Brightness: ${color.brightness}`
-    bright.onclick = () => copyText(color.brightness)
+    const brightness = document.createElement("span")
+    brightness.textContent = `Brightness: ${color.brightness}`
+    brightness.onclick = () => copyText(color.brightness)
 
     info.appendChild(hex)
     info.appendChild(rgb)
     info.appendChild(hsl)
-    info.appendChild(bright)
+    info.appendChild(brightness)
 
-    row.appendChild(swatch)
-    row.appendChild(info)
+    card.appendChild(swatch)
+    card.appendChild(info)
 
-    palette.appendChild(row)
+    palette.appendChild(card)
   }
 }
 
